@@ -4,7 +4,7 @@
   "description": "This repository will host the source code for the Contract Tracker project.",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js",
+    "start": "npm i; node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -12,8 +12,15 @@
     "url": "https://source.developers.google.com/p/contracttracker-217613/r/contractTracker"
   },
   "author": "",
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.16.3"
+    "@google-cloud/storage": "^2.0.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "pg": "^7.5.0"
+  },
+  "devDependencies": {
+    "coffeescript": "^2.3.2",
+    "sass": "^1.14.2"
   }
 }

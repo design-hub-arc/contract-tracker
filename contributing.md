@@ -1,6 +1,7 @@
 # Contributing
 
 ## What to install?
+
 * git
 * docker
 * docker-compose
@@ -14,23 +15,25 @@
 
 ## Setting up your environment
 Clone this repository using **gcloud source repos clone**. See the gcloud docs for more details.
-You will need to create 2 files
+You will need to create 2 files, these files should not be version controlled.
 **.gitignore** and **.gcloudignore**
 
 Also you will need to install **gcloud-utils**
 
 
-### What to add to .gitignore
+### What do I add to my .gitignore
 Add paths to files that you do not want version controlled in the **.gitignore**
 Add an entry for **.gitignore** to avoid sharing this file with other team members
 
 Candidates for files that should not be saved:
+
 * temporary save files from your editor
 * personal project notes that you dont want to share :(
 * build files and directories such as those in **build/** or **node_modules/** 
+* your **.gcloudignore** file
 
 
-### What to add to .gcloudignore
+### What do I add to my .gcloudignore
 Add paths to files that should not be deployed to app engine inside **.gcloudignore** 
 
 Candidates for files that should not be saved:
@@ -42,18 +45,18 @@ Candidates for files that should not be saved:
 * .gcloudignore
 
 
-### How to install gcloud-utils
+### How to install gcloud-utils on my machine
 See the google cloud platform gcloud documentation. 
 
 
-## How to build?
+## How to build the project?
 Run the following command(s)
 ```bash
 make
 ```
 
 
-## How to deploy locally?
+## How to deploy locally for testing?
 ### Starting
 Run the following command(s)
 ```bash
@@ -62,7 +65,7 @@ docker-compose up
 ```
 
 ### Stopping
-Type <ctrl-c>
+Type \<ctrl-c\>
 
 
 ## How to deploy to app engine?
