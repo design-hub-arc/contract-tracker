@@ -89,7 +89,7 @@ $(SERVER_HTML_BUILD_FILES): $(SERVER_HTML_SRC_FILES) $(BUILD_DIR_DIRS)
 ## server/*.ejs
 SERVER_EJS_SRC_DIR := $(SRC_DIR)server/ejs/
 SERVER_EJS_SRC_FILES := $(shell find $(SERVER_EJS_SRC_DIR) -type f -iname *.ejs)
-SERVER_EJS_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(EJS_HTML_SRC_FILES))
+SERVER_EJS_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(SERVER_EJS_SRC_FILES))
 
 # Copy server .ejs files to the build directory
 $(SERVER_EJS_BUILD_FILES): $(SERVER_EJS_SRC_FILES) $(BUILD_DIR_DIRS)
