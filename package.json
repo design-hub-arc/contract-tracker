@@ -4,7 +4,7 @@
   "description": "This repository will host the source code for the Contract Tracker project.",
   "main": "main.js",
   "scripts": {
-    "start": "npm i; node main.js",
+    "start": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,8 +15,11 @@
   "license": "MIT",
   "dependencies": {
     "@google-cloud/storage": "^2.0.3",
+    "body-parser": "^1.18.3",
+    "consolidate": "^0.15.1",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "firebase-admin": "^6.0.0",
     "pg": "^7.5.0",
     "redis": "^2.8.0"
   },
