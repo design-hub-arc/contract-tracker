@@ -43,16 +43,16 @@ app.use((req, res, next) => {
 
 
 // css
-app.get('/css/*', static_middleware('build/css'));
+app.use('/css', static_middleware('build/css'));
 
 // html
-app.get('/html/*', static_middleware('build/html'));
+app.use('/html', static_middleware('build/html'));
 
 // js
-app.get('/js/*', static_middleware('build/js'));
+app.use('/js', static_middleware('build/js'));
 
 // static
-app.get('/static/*', static_middleware('build/static'));
+app.use('/static', static_middleware('build/static'));
 
 
 // server
