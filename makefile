@@ -16,7 +16,7 @@ $(BUILD_DIR_DIRS): $(SRC_DIR_DIRS)
 ### css/
 ## *.css
 CSS_SRC_DIR := $(SRC_DIR)css/
-CSS_SRC_FILES := $(shell find $(CSS_SRC_DIR) -type f -iname *.css)
+CSS_SRC_FILES := $(shell find $(CSS_SRC_DIR) -type f -iname '*.css')
 CSS_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(CSS_SRC_FILES))
 
 # Copy .css files to the build directory
@@ -36,7 +36,7 @@ $(SASS_BUILD_FILES): $(SASS_SRC_FILES) $(BUILD_DIR_DIRS)
 ### html/
 ## *.html
 HTML_SRC_DIR := $(SRC_DIR)html/
-HTML_SRC_FILES := $(shell find $(HTML_SRC_DIR) -type f -iname *.html)
+HTML_SRC_FILES := $(shell find $(HTML_SRC_DIR) -type f -iname '*.html')
 HTML_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(HTML_SRC_FILES))
 
 # Copy .html files to the build directory
@@ -46,7 +46,7 @@ $(HTML_BUILD_FILES): $(HTML_SRC_FILES) $(BUILD_DIR_DIRS)
 
 ## *.ejs
 EJS_SRC_DIR := $(SRC_DIR)html/
-EJS_SRC_FILES := $(shell find $(EJS_SRC_DIR) -type f -iname *.ejs)
+EJS_SRC_FILES := $(shell find $(EJS_SRC_DIR) -type f -iname '*.ejs')
 EJS_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(EJS_SRC_FILES:.ejs=.html))
 
 # Compile .ejs files to .html files in the build directory
@@ -57,7 +57,7 @@ $(EJS_BUILD_FILES): $(EJS_SRC_FILES) $(BUILD_DIR_DIRS)
 ### js/
 ## *.js
 JS_SRC_DIR := $(SRC_DIR)js/
-JS_SRC_FILES := $(shell find $(JS_SRC_DIR) -type f -iname *.js)
+JS_SRC_FILES := $(shell find $(JS_SRC_DIR) -type f -iname '*.js')
 JS_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(JS_SRC_FILES))
 
 # Copy .js files to the build directory
@@ -67,7 +67,7 @@ $(JS_BUILD_FILES): $(JS_SRC_FILES) $(BUILD_DIR_DIRS)
 
 ## *.coffee
 COFFEE_SRC_DIR := $(SRC_DIR)js/
-COFFEE_SRC_FILES := $(shell find $(COFFEE_SRC_DIR) -type f -iname *.coffee)
+COFFEE_SRC_FILES := $(shell find $(COFFEE_SRC_DIR) -type f -iname '*.coffee')
 COFFEE_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(COFFEE_SRC_FILES:.coffee=.js))
 
 # Compile .coffee files to .js files in the build directory
@@ -78,7 +78,7 @@ $(COFFEE_BUILD_FILES): $(COFFEE_SRC_FILES) $(BUILD_DIR_DIRS)
 ### server/html
 ## server/*.html
 SERVER_HTML_SRC_DIR := $(SRC_DIR)server/ejs/
-SERVER_HTML_SRC_FILES := $(shell find $(SERVER_HTML_SRC_DIR) -type f -iname *.html)
+SERVER_HTML_SRC_FILES := $(shell find $(SERVER_HTML_SRC_DIR) -type f -iname '*.html')
 SERVER_HTML_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(SERVER_HTML_SRC_FILES))
 
 # Copy server .html files to the build directory
@@ -88,7 +88,7 @@ $(SERVER_HTML_BUILD_FILES): $(SERVER_HTML_SRC_FILES) $(BUILD_DIR_DIRS)
 
 ## server/*.ejs
 SERVER_EJS_SRC_DIR := $(SRC_DIR)server/ejs/
-SERVER_EJS_SRC_FILES := $(shell find $(SERVER_EJS_SRC_DIR) -type f -iname *.ejs)
+SERVER_EJS_SRC_FILES := $(shell find $(SERVER_EJS_SRC_DIR) -type f -iname '*.ejs')
 SERVER_EJS_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(SERVER_EJS_SRC_FILES))
 
 # Copy server .ejs files to the build directory
@@ -99,8 +99,8 @@ $(SERVER_EJS_BUILD_FILES): $(SERVER_EJS_SRC_FILES) $(BUILD_DIR_DIRS)
 ### server/js
 ## server/*.js
 SERVER_JS_SRC_DIR := $(SRC_DIR)server/js/
-SERVER_JS_SRC_FILES := $(shell find $(SERVER_JS_SRC_DIR) -type f -iname *.js)
-SERVER_JS_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(EJS_HTML_SRC_FILES))
+SERVER_JS_SRC_FILES := $(shell find $(SERVER_JS_SRC_DIR) -type f -iname '*.js')
+SERVER_JS_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(SERVER_JS_SRC_FILES))
 
 # Copy server .js files to the build directory
 $(SERVER_JS_BUILD_FILES): $(SERVER_JS_SRC_FILES) $(BUILD_DIR_DIRS)
@@ -109,7 +109,7 @@ $(SERVER_JS_BUILD_FILES): $(SERVER_JS_SRC_FILES) $(BUILD_DIR_DIRS)
 
 ## server/*.coffee
 SERVER_COFFEE_SRC_DIR := $(SRC_DIR)server/js/
-SERVER_COFFEE_SRC_FILES := $(shell find $(SERVER_COFFEE_SRC_DIR) -type f -iname *.coffee)
+SERVER_COFFEE_SRC_FILES := $(shell find $(SERVER_COFFEE_SRC_DIR) -type f -iname '*.coffee')
 SERVER_COFFEE_BUILD_FILES := $(call changeroot,$(BUILD_DIR),$(SERVER_COFFEE_SRC_FILES:.coffee=.js))
 
 # Compile server .coffee files to .js files in the build directory
