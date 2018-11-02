@@ -8,6 +8,7 @@
 * python3.5
 * nodejs
 * npm (usually installed with nodejs)
+* gcloud-utils
 * IDE or Editor of your choice
 
 ^ You may need a linux vm to install and run these programs locally
