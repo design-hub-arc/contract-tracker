@@ -7,7 +7,8 @@ const cookieParser = require('cookie-parser');
 const url = require('url');
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
+
 
 
 // helper function
@@ -46,6 +47,11 @@ app.use((req, res, next) => {
 });
 
 
+// Error handler
+app.use((err, req, res, next) => {
+    res.sendStatus(500);
+});
+
 // css
 app.use('/css', static_middleware('build/css'));
 
@@ -63,6 +69,7 @@ app.use('/static', static_middleware('build/static'));
 app.use((err, req, res, next) => {
     res.sendStatus(500);
 });
+// ejs
 app.get('/server/ejs/*', (req, res, next) => {
     // sends file to user
     res.render(req.params[0], {site_name: 'Design Hub Contract Tracker'});
@@ -71,7 +78,7 @@ app.get('/server/ejs/*', (req, res, next) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-    res.sendStatus(404);
+    res.sendStatus(500);
 });
 
 
