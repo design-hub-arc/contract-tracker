@@ -22,12 +22,17 @@ app.set('views', '/build/server/ejs');
 
 // logging
 app.use((req, res, next) => {
-    console.log("%s | %s | %s | %s | %s",
-                req.headers.host,
-                new Date().toString(),
-                req.method,
-                req.url,
-                req.headers['user-agent']);
+    // Only logs request once it has been complete
+    res.on('finish', () => {
+        console.log("%s | %s | %s | %s | %s | %s, %s",
+                    req.headers.host,
+                    new Date().toString(),
+                    req.method,
+                    req.url,
+                    req.headers['user-agent'],
+                    res.statusCode,
+                    res.statusMessage);
+    });
     next();
 });
 
