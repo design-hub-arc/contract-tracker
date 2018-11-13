@@ -66,7 +66,7 @@ app.get('/_ah/warmup', (req, res) => {
 
 // Default file
 app.get('/', (req, res, next) => {
-    res.sendFile('./build/html/login.html');
+    res.sendFile('/build/html/login.html', {root: __dirname});
 });
 
 // Don't serve the default file above from the static middleware
@@ -95,6 +95,7 @@ app.get('/server/ejs/*', (req, res, next) => {
 
 // Error handler
 app.use((err, req, res, next) => {
+    console.error(err);
     res.sendStatus(500);
 });
 
