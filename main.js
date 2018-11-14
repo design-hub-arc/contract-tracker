@@ -39,15 +39,23 @@ app.set('views', '/build/server/ejs');
 // logging
 app.use((req, res, next) => {
     // Only logs request once it has been complete
+    var
+    client_ip    = req.connection.remoteAddress,
+    time_started = new Date().toISOString(),
+    method       = req.method,
+    endpoint     = req.url,
+    user_agent   = req.headers['user-agent'];
+
     res.on('finish', () => {
-        console.log("%s | %s | %s | %s | %s | %s, %s",
-                    req.headers.host,
-                    new Date().toString(),
-                    req.method,
-                    req.url,
-                    req.headers['user-agent'],
+        console.log("%s | %s -> %s | %s | %s | %s, %s | %s",
+                    client_ip,
+                    time_started,
+                    new Date().toISOString(),
+                    method,
+                    endpoint,
                     res.statusCode,
-                    res.statusMessage);
+                    res.statusMessage,
+                    user_agent);
     });
     next();
 });
