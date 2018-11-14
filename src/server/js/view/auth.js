@@ -9,10 +9,14 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 // log in user
-router.post('/login', (req, res, next) => {});
+router.post('/login', (req, res, next) => {
+    res.sendStatus(501);
+});
 
 // sign up user
-router.post('/signup', (req, res, next) => {});
+router.post('/signup', (req, res, next) => {
+    res.sendStatus(501);
+});
 
 // keep at bottom of file
 module.exports = router;
