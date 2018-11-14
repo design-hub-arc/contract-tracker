@@ -15,11 +15,6 @@ router.use('/js', express.static('build/js'));
 // static
 router.use('/static', express.static('build/static'));
 
-// No matching route
-router.use((req, res, next) => {
-    res.sendStatus(404);
-});
-
 
 // Error handler
 router.use((err, req, res, next) => {
