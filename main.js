@@ -6,9 +6,9 @@ const SECRETS_FILE = process.env.SECRETS_FILE || 'secrets.js';
 
 // set environmental variables using the key value pairs in the secrets file
 const secrets = require(`./${SECRETS_FILE}`);
-for (key in secrets)
+for (var key in secrets)
 { // Set environmental variables before anything else
-    process.env[key] = secrets.key;
+    process.env[key] = secrets[key];
 }
 
 //-------------------------------------------------------------------------------
