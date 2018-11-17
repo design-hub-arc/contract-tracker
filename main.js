@@ -31,7 +31,7 @@ app.engine('ejs', cons.ejs);
 
 // set .ejs as the default extension
 app.set('view engine', 'ejs');
-app.set('views', '/build/server/ejs');
+app.set('views', process.cwd() + '/build/server/ejs');
 
 
 //-------------------------------------------------------------------------------
