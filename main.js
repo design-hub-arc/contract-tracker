@@ -20,6 +20,7 @@ const cons = require('consolidate');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const url = require('url');
+const session = require('./src/server/js/controller/sessions.js');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -92,6 +93,27 @@ app.use('/', static_content);
 const auth = require('./build/server/js/view/auth.js');
 app.use('/auth', auth);
 
+
+// Force user to be logged in
+app.use(cookieParser(), (req, res, next) => {
+    if ('session' in req.cookies)
+    {
+        session.verify(req.cookies['session'])
+            .then(payload => {
+                next();
+            })
+            .catch(err => {
+                // not authorized
+                console.error(err);
+                res.sendStatus(403);
+            });
+    }
+    else
+    {
+        // not authorized
+        res.sendStatus(403);
+    }
+});
 
 // Dynamic html content
 app.get('/server/ejs/*', (req, res, next) => {
