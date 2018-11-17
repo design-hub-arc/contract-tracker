@@ -7,9 +7,6 @@ const session = require('../controller/sessions.js');
 const router = express.Router();
 
 
-// for parsing application/json
-router.use(bodyParser.json());
-
 // for parsing application/x-www-form-urlencoded
 router.use(bodyParser.urlencoded({extended: false}));
 
@@ -34,14 +31,11 @@ router.post('/login', (req, res, next) => {
 
         fb_auth.signInWithEmailAndPassword(email, password)
             .then(user => {
-                return user;
-            })
-            .then(user => {
                 return session.create(user.uid);
             })
             .then(token => {
                 res.cookie('session', token.encoded);
-                res.sendStatus(200);
+                res.redirect(303, '/');
             })
             .catch(err => {
                 next(err);
@@ -71,14 +65,11 @@ router.post('/signup', (req, res, next) => {
 
         fb_auth.signUpWithEmailAndPassword(email, password)
             .then(user => {
-                return user;
-            })
-            .then(user => {
                 return session.create(user.uid);
             })
             .then(token => {
                 res.cookie('session', token.encoded);
-                res.sendStatus(200);
+                res.redirect(303, '/');
             })
             .catch(err => {
                 next(err);
@@ -99,7 +90,7 @@ router.post('/logout', (req, res, next) => {
         session.read(token)
             .then((payload) => {
                 res.clearCookie('session');
-                res.sendStatus(200);
+                res.redirect(303, '/');
                 session.revoke(token);
             })
             .catch((err) => {
