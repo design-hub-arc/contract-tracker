@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const uuid = require('uuidv4');
 const async_jwt = require('../utils/jsonwebtoken_promisified.js');
 
 const private_key = process.env.JWT_PRIVATE_KEY;
@@ -22,8 +23,9 @@ module.exports.verify = verify;
 
 async function create (uid)
 {
-    // TODO get unique token id (must only be unique per uid)
-    var token_uid = 0;
+    // get unique token id (Not guranteed but nearly impossible to occur)
+    // the chance of a collision is: 1 in roughly 3.4E^38
+    var token_uid = uuid();
 
     // set expiration date to +30m
     var payload = {
