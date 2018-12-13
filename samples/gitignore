@@ -1,0 +1,15 @@
+# Ignore self
+.gitignore
+
+# google cloud ignore file
+.gcloudignore
+
+# build files
+/node_modules/
+/build/
+
+# Personal Notes
+/notes/
+
+# Ignore secrets
+/secrets.js

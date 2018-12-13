@@ -1,0 +1,11 @@
+# Ignore all by default
+*
+
+# Upload only these files on deploy
+!/app.yaml
+!/build/
+!/build/**
+!/secrets.js
+!/package.json
+!/package-lock.json
+!/main.js
