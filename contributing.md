@@ -8,6 +8,7 @@
 * python3.5
 * nodejs
 * npm (usually installed with nodejs)
+* npx (globally)
 * gcloud-utils
 * IDE or Editor of your choice
 
