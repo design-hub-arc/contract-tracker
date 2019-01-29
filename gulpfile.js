@@ -2,21 +2,42 @@ const { series }    = require('gulp');
 const { parallel }  = require('gulp');
 
 
-exports.default    = parallel();
+exports.default;
 
-exports.build_css  = series();
-exports.clean_css  = series();
+// Build documentation
+exports.build_docs;
 
-exports.build_scss = series();
-exports.clean_scss = series();
+// Deploy to development servers
+exports.deploy_dev;
 
-exports.build_html = series();
-exports.clean_html = series();
+// Deploy to production servers
+exports.deploy_prod;
 
-exports.build_ejs  = series();
-exports.clean_ejs  = series();
+// Deploy locally with docker in development mode
+exports.deploy_local_dev;
 
-exports.build_js   = series();
-exports.clean_js   = series();
+// Deploy locally with docker in production mode
+exports.deploy_local_prod;
 
-exports.clean_all  = series();
+
+// Stylesheets
+exports.build_stylesheet = require('./tasks/client/stylesheets.js');
+
+// Markup
+//// Client
+exports.build_client_markup = require('./tasks/client/markup.js');
+//// Server
+exports.build_server_markup;
+
+
+// Scripts
+//// Client
+exports.build_client_scripts;
+//// Server
+exports.build_server_scripts;
+
+// Static
+exports.build_static;
+
+// Cleanup mess
+exports.clean_all;

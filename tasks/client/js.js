@@ -6,6 +6,8 @@ const through2      = require('through2');
 const gulp_clean    = require('gulp-clean');
 
 
+// parameters: src, dest
+
 ////// js/
 //// *.js
 // Copy .js files to the build directory
