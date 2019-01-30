@@ -4,11 +4,9 @@
 * git
 * docker
 * docker-compose
-* make
-* python3.5
 * nodejs
 * npm (usually installed with nodejs)
-* npx (globally)
+* npx (Install globally with npm)
 * gcloud-utils
 * IDE or Editor of your choice
 
@@ -53,9 +51,9 @@ See the the example in the Sample directory.
 Assign module.exports to a js object with key value pairs for the following properties:
 
 * POSTGRES_PASSWORD
-* FIREBASE_API_KEY
-* JWT_PRIVATE_KEY
-* JWT_PUBLIC_KEY
+* FIREBASE\_API_KEY
+* JWT\_PRIVATE_KEY
+* JWT\_PUBLIC_KEY
 
 See the the example in the Sample directory.
 
@@ -145,7 +143,7 @@ Explained in the above sections.
 ## How to build the project?
 Run the following command(s)
 ```bash
-make
+npx gulp
 ```
 
 
@@ -153,7 +151,7 @@ make
 ### Starting
 Run the following command(s)
 ```bash
-make
+npx gulp
 docker-compose up
 ```
 
@@ -164,6 +162,6 @@ Type \<ctrl-c\>
 ## How to deploy to app engine?
 Run the following command(s) once **gcloud init** has been run atleast once. See the gcloud docs for more info. 
 ```bash
-make
+npx gulp
 gcloud app deploy
 ```
