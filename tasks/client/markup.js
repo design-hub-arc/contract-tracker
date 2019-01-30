@@ -1,9 +1,7 @@
 const { src }       = require('gulp');
 const { dest }      = require('gulp');
-const { parallel }  = require('gulp');
 
 const through2      = require('through2');
-const gulp_clean    = require('gulp-clean');
 const ejs           = require('ejs');
 
 
@@ -47,4 +45,5 @@ function copyHTML()
     .pipe(dest("build/html/"));
 }
 
-exports = parallel(copyHTML, buildEJS);
+exports.copyHTML = copyHTML;
+exports.buildEJS = buildEJS;

@@ -1,6 +1,5 @@
 const { src }       = require('gulp');
 const { dest }      = require('gulp');
-const { parallel }  = require('gulp');
 
 const gulp_sass     = require('gulp-sass');
 const node_sass     = require('node-sass');
@@ -25,4 +24,5 @@ function buildCSS()
 }
 
 
-exports = parallel(buildCSS, buildSCSS);
+exports.buildCSS = buildCSS;
+exports.buildSCSS = buildSCSS;
