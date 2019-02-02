@@ -8,7 +8,7 @@ const SECRETS_FILE = process.env.SECRETS_FILE || 'secrets.js';
 const secrets = require(`./${SECRETS_FILE}`);
 for (var key in secrets)
 { // Set environmental variables before anything else
-    process.env[key] = secrets[key];
+  process.env[key] = secrets[key];
 }
 
 //-------------------------------------------------------------------------------
@@ -39,26 +39,26 @@ app.set('views', process.cwd() + '/build/server/ejs');
 
 // logging
 app.use((req, res, next) => {
-    // Only logs request once it has been complete
-    var
-    client_ip    = req.connection.remoteAddress,
-    time_started = new Date().toISOString(),
-    method       = req.method,
-    endpoint     = req.url,
-    user_agent   = req.headers['user-agent'];
+  // Only logs request once it has been complete
+  var
+  client_ip    = req.connection.remoteAddress,
+  time_started = new Date().toISOString(),
+  method       = req.method,
+  endpoint     = req.url,
+  user_agent   = req.headers['user-agent'];
 
-    res.on('finish', () => {
-        console.log("%s | %s -> %s | %s | %s | %s, %s | %s",
-                    client_ip,
-                    time_started,
-                    new Date().toISOString(),
-                    method,
-                    endpoint,
-                    res.statusCode,
-                    res.statusMessage,
-                    user_agent);
-    });
-    next();
+  res.on('finish', () => {
+    console.log("%s | %s -> %s | %s | %s | %s, %s | %s",
+                client_ip,
+                time_started,
+                new Date().toISOString(),
+                method,
+                endpoint,
+                res.statusCode,
+                res.statusMessage,
+                user_agent);
+  });
+  next();
 });
 
 
@@ -66,8 +66,8 @@ app.use((req, res, next) => {
 
 // GCP app engine warmup
 app.get('/_ah/warmup', (req, res) => {
-    // Handle warmup logic. Initiate db connection, etc.
-    res.sendStatus(200);
+  // Handle warmup logic. Initiate db connection, etc.
+  res.sendStatus(200);
 });
 
 
@@ -75,12 +75,12 @@ app.get('/_ah/warmup', (req, res) => {
 
 // Default file
 app.get('/', (req, res, next) => {
-    res.sendFile('/build/html/login.html', {root: __dirname});
+  res.sendFile('/build/html/login.html', {root: __dirname});
 });
 
 // Don't serve the default file above from the static middleware
 app.get('/html/login.html', (req, res, next) => {
-    res.sendStatus(404);
+  res.sendStatus(404);
 });
 
 // Serves local static assets such as html, css, images, and js files
@@ -96,43 +96,43 @@ app.use('/auth', auth);
 
 // Force user to be logged in
 app.use(cookieParser(), (req, res, next) => {
-    if ('session' in req.cookies)
-    {
-        session.verify(req.cookies['session'])
-            .then(payload => {
-                next();
-            })
-            .catch(err => {
-                // not authorized
-                console.error(err);
-                res.sendStatus(403);
-            });
-    }
-    else
-    {
+  if ('session' in req.cookies)
+  {
+    session.verify(req.cookies['session'])
+      .then(payload => {
+        next();
+      })
+      .catch(err => {
         // not authorized
+        console.error(err);
         res.sendStatus(403);
-    }
+      });
+  }
+  else
+  {
+    // not authorized
+    res.sendStatus(403);
+  }
 });
 
 // Dynamic html content
 app.get('/server/ejs/*', (req, res, next) => {
-    // sends file to user
-    res.render(req.params[0], {site_name: 'DH Contract Tracker'});
+  // sends file to user
+  res.render(req.params[0], {site_name: 'DH Contract Tracker'});
 });
 
 //-------------------------------------------------------------------------------
 
 // Error handler
 app.use((err, req, res, next) => {
-    console.error(err);
-    res.sendStatus(500);
+  console.error(err);
+  res.sendStatus(500);
 });
 
 
 // No route found
 app.use((req, res) => {
-    res.sendStatus(404);
+  res.sendStatus(404);
 });
 
 //-------------------------------------------------------------------------------
