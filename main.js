@@ -32,7 +32,7 @@ app.engine('ejs', cons.ejs);
 
 // set .ejs as the default extension
 app.set('view engine', 'ejs');
-app.set('views', process.cwd() + '/build/server/ejs');
+app.set('views', process.cwd() + '/build/server/ejs/');
 
 
 //-------------------------------------------------------------------------------
@@ -73,13 +73,15 @@ app.get('/_ah/warmup', (req, res) => {
 
 //-------------------------------------------------------------------------------
 
+const landing_page = "/html/login.html";
+
 // Default file
 app.get('/', (req, res, next) => {
-  res.sendFile('/build/html/login.html', {root: __dirname});
+  res.sendFile(landing_page, {root: path.join(__dirname, "build/")});
 });
 
 // Don't serve the default file above from the static middleware
-app.get('/html/login.html', (req, res, next) => {
+app.get(landing_page, (req, res, next) => {
   res.sendStatus(404);
 });
 
