@@ -18,7 +18,7 @@ router.use('/static', express.static('build/static'));
 
 // Error handler
 router.use((err, req, res, next) => {
-    res.sendStatus(404);
+    res.sendStatus(500);
 });
 
 // keep at bottom of file
