@@ -1,9 +1,7 @@
 const { src }       = require('gulp');
 const { dest }      = require('gulp');
 
-const babel         = require('@babel/core');
 const webpack       = require('webpack-stream');
-const through2      = require('through2');
 const named         = require('vinyl-named');
 
 
