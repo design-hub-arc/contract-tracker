@@ -87,15 +87,10 @@ router.post('/logout', (req, res, next) => {
   if ('session' in req.cookies)
   {
     var token = req.cookies['session'];
-    session.verify(token)
-      .then((payload) => {
-        res.clearCookie('session');
-        res.redirect(303, '/');
-        session.revoke(token);
-      })
-      .catch((err) => {
-        next(err);
-      });
+    res.clearCookie('session');
+    res.redirect(303, '/');
+    session.revoke(token)
+      .then(x=>x, x=>x); // do nothing on success or failure
   }
   else
   {

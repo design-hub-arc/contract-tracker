@@ -108,8 +108,9 @@ app.use(cookieParser(), (req, res, next) => {
         next();
       })
       .catch(err => {
-        // not authorized
+        // Invalid session
         console.error(err);
+        res.clearCookie('session');
         res.sendStatus(403);
       });
   }
