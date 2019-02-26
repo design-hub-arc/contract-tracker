@@ -100,11 +100,11 @@ app.get('/_ah/warmup', (req, res) => {
 
 //-------------------------------------------------------------------------------
 
-const landing_page = "/html/login.html";
+const landing_page = "/server/ejs/login.ejs";
 
 // Default file
 app.get('/', (req, res, next) => {
-  res.sendFile(landing_page, {root: path.join(__dirname, "build/")});
+  res.render('login.ejs', {site_name: 'DH Contract Tracker'});
 });
 
 // Don't serve the default file above from the static middleware
