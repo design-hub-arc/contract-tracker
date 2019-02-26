@@ -14,6 +14,9 @@ router.use(bodyParser.urlencoded({extended: false}));
 router.use(cookieParser());
 
 
+const google = require('./google.js');
+router.use('/google', google);
+
 // log in user
 router.post('/login', (req, res, next) => {
   if ('session' in req.cookies)
