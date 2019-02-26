@@ -30,6 +30,7 @@ const port = process.env.PORT || 8080;
 
 //-------------------------------------------------------------------------------
 
+
 // assign the ejs engine to .html files
 app.engine('ejs', cons.ejs);
 
@@ -40,11 +41,34 @@ app.set('views', process.cwd() + '/build/server/ejs/');
 
 //-------------------------------------------------------------------------------
 
+
+// detect if running inside GCP App Engine
+if (process.env["GOOGLE_CLOUD_PROJECT"])
+{
+  app.set('trust proxy', true);
+
+  app.use((req, res, next) => {
+    if (!req.secure)
+    {
+      // Force https
+      res.redirect(301, "https://" + req.hostname + req.originalUrl);
+    }
+    else
+    {
+      // Set expiration time for this header to 1 day
+      res.set("Strict-Transport-Security", `${60 * 60 * 24}; preload`);
+      next();
+    }
+  });
+}
+
+//-------------------------------------------------------------------------------
+
 // logging
 app.use((req, res, next) => {
   // Only logs request once it has been complete
   var
-  client_ip    = req.connection.remoteAddress,
+  client_ip    = req.ip,
   time_started = new Date().toISOString(),
   method       = req.method,
   endpoint     = req.url,
