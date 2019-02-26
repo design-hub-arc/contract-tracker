@@ -22,7 +22,8 @@ const ejs          = require('ejs');
 const cons         = require('consolidate');
 const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
-const url          = require('url');
+const {URL,
+       URLSearchParams} = require('url');
 const session      = require('./build/server/js/controller/sessions.js');
 
 const app = express();
