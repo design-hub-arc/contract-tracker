@@ -17,6 +17,7 @@ for (var key in secrets)
 //-------------------------------------------------------------------------------
 
 const express           = require('express');
+const fs                = require('fs');
 const path              = require('path');
 const ejs               = require('ejs');
 const cons              = require('consolidate');
@@ -105,17 +106,19 @@ if (gcp.isDeployedOnGCP())
 
 //-------------------------------------------------------------------------------
 
-const landing_page = "/server/ejs/login.ejs";
-
 // Default file
 app.get('/', (req, res, next) => {
-  res.render('login.ejs', {site_name: 'DH Contract Tracker'});
+  var new_url = new URL(req.url, 'http://temp.com');
+  new_url.pathname = '/server/ejs/login.ejs';
+  req.url = new_url.pathname;
+
+  if (new_url.searchParams)
+  {
+    req.url += new_url.search;
+  }
+  next();
 });
 
-// Don't serve the default file above from the static middleware
-app.get(landing_page, (req, res, next) => {
-  res.sendStatus(404);
-});
 
 // Serves local static assets such as html, css, images, and js files
 const static_content = require('./build/server/js/view/static.js');
@@ -128,32 +131,31 @@ const auth = require('./build/server/js/view/auth.js');
 app.use('/auth', auth);
 
 
-// Force user to be logged in
-app.use(cookieParser(), (req, res, next) => {
-  if ('session' in req.cookies)
-  {
-    session.verify(req.cookies['session'])
-      .then(payload => {
-        next();
-      })
-      .catch(err => {
-        // Invalid session
-        console.error(err);
-        res.clearCookie('session');
-        res.sendStatus(403);
-      });
-  }
-  else
-  {
-    // not authorized
-    res.sendStatus(403);
-  }
-});
-
 // Dynamic html content
 app.get('/server/ejs/*', (req, res, next) => {
   // sends file to user
-  res.render(req.params[0], {site_name: 'DH Contract Tracker'});
+  var filename = req.params[0];
+
+  var fullpath = app.get('views') + req.params[0];
+  if (!fs.existsSync(fullpath)) {
+    next();
+    return;
+  }
+
+  const defaults = {
+    site_name: "DH Contract Tracker"
+  };
+
+  var data;
+  var js_file = './build/server/js/ejs/' + path.basename(filename, '.ejs') + '.js';
+  if (fs.existsSync(js_file)) {
+    data = require(js_file).run(req, res);
+  }
+  else {
+    data = defaults;
+  }
+
+  res.render(filename, data);
 });
 
 //-------------------------------------------------------------------------------
