@@ -8,7 +8,7 @@ const SECRETS_FILE = process.env.SECRETS_FILE || 'secrets.js';
 const secrets = require(`./${SECRETS_FILE}`);
 for (var key in secrets)
 {
-  if(!process.env[key])
+  if(!process.env[key] || key == "PORT")
   {
     process.env[key] = secrets[key];
   }
