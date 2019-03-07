@@ -49,7 +49,7 @@ router.get('/callback', async (req, res, next) => {
           }
           else
           {
-            console.log(res);
+            console.log(body);
           }
         }
         else

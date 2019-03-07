@@ -22,8 +22,9 @@ router.post('/login', (req, res, next) => {
   if ('session' in req.cookies)
   {
     let token = req.cookies['session'];
-    session.revoke(token, false)
-      .catch(err => {});
+    session.revoke(token)
+      .then(_ => _)
+      .catch(_ => _);
   }
 
   if ('email' in req.body && 'password' in req.body)
