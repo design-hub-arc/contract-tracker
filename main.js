@@ -25,6 +25,7 @@ const cookieParser      = require('cookie-parser');
 const {URL,
        URLSearchParams} = require('url');
 const session           = require('./build/server/js/controller/sessions.js');
+const gcp               = require('./build/server/js/utils/gcp.js');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -44,7 +45,7 @@ app.set('views', process.cwd() + '/build/server/ejs/');
 
 
 // detect if running inside GCP App Engine
-if (process.env["GOOGLE_CLOUD_PROJECT"])
+if (gcp.isDeployedOnGCP())
 {
   app.set('trust proxy', true);
 
@@ -92,12 +93,15 @@ app.use((req, res, next) => {
 
 //-------------------------------------------------------------------------------
 
-// GCP app engine warmup
-app.get('/_ah/warmup', (req, res) => {
-  // Handle warmup logic. Initiate db connection, etc.
-  res.sendStatus(200);
-});
+if (gcp.isDeployedOnGCP())
+{
+  // GCP app engine warmup
+  app.get('/_ah/warmup', (req, res) => {
+    // Handle warmup logic. Initiate db connection, etc.
+    res.sendStatus(200);
+  });
 
+}
 
 //-------------------------------------------------------------------------------
 
