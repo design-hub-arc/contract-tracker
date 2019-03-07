@@ -58,7 +58,7 @@ if (gcp.isDeployedOnGCP())
     else
     {
       // Set expiration time for this header to 1 day
-      res.set("Strict-Transport-Security", `${60 * 60 * 24}; preload`);
+      res.set("Strict-Transport-Security", `${60 * 60 * 24}`);
       next();
     }
   });
