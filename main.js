@@ -169,5 +169,3 @@ app.use((req, res) => {
 
 // keep at the bottom
 app.listen(port, () => console.log(`Listening on port ${port}!`));
-
-var test = require('./build/server/js/model/database.js');
