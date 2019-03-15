@@ -23,7 +23,7 @@ const cons         = require('consolidate');
 const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
 const url          = require('url');
-const session      = require('./build/server/js/controller/sessions.js');
+const session      = require('./build/server/js/model/sessions.js');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -119,7 +119,7 @@ app.use('/', static_content);
 //-------------------------------------------------------------------------------
 
 // For login and signup logic
-const auth = require('./build/server/js/view/auth.js');
+const auth = require('./build/server/js/controller/auth.js');
 app.use('/auth', auth);
 
 

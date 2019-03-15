@@ -11,6 +11,7 @@ services:
       - "8080:8080"
     networks:
       - redis
+      - postgres
 
   memorystore:
     image: redis:3.2.11
@@ -22,6 +23,7 @@ services:
     volumes:
       - ./postgres.conf:/etc/postgresql/postgresql.conf:ro
     environment:
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=M75YE6XscWpG3AHt
     networks:
       - postgres
