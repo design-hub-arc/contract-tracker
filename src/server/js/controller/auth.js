@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const fb_auth = require('../model/services/firebaseauthapi.js');
-const session = require('../controller/sessions.js');
+const session = require('../model/sessions.js');
 
 const router = express.Router();
 

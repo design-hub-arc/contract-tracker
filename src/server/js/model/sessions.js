@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 const uuid = require('uuidv4');
-const async_jwt = require('../utils/jsonwebtoken_promisified.js');
 const redis = require("redis");
+
+const async_jwt = require('../utils/jsonwebtoken_promisified.js');
+const knex = require("./postgresql.js");
 
 const redis_host = process.env.REDIS_HOST;
 const redis_port = process.env.REDIS_PORT;
@@ -9,6 +11,9 @@ const redis_port = process.env.REDIS_PORT;
 const private_key = process.env.JWT_PRIVATE_KEY;
 const public_key = process.env.JWT_PUBLIC_KEY;
 const jwt_options = { algorithm: 'RS256'};
+
+
+if (!private_key) return Promise.reject("NO_PRIVATE_KEY_PROVIDED");
 
 
 // Using redis to track sessions
@@ -22,28 +27,48 @@ client.on("error", function (err) {
 });
 
 
+function promisifyRedis (client, func)
+{
+  return function newFunction ()
+  {
+    return new Promise((resolve, reject) => {
+      var params = Array.from(arguments);
+      params.push((err, reply) => {
+        if (err) reject(err);
+        else resolve(reply);
+      });
+      console.log(params);
+      func.apply(client, params);
+    });
+  };
+}
+
+
+["ping", "set", "get", "del", "hmset", "hdel", "hmget", "expire", "hgetall", "lrange"].forEach(eta => {
+  client["async_" + eta] = promisifyRedis(client, client[eta]);
+});
+
 
 async function verify (token)
 {
-  if (!public_key) throw "NO_PUBLIC_KEY_PROVIDED";
   var payload = jwt.verify(token,
                            public_key,
                            {algorithms: ['RS256'], ignoreExpiration: true});
   if (payload.exp < Date.now())
   {
-    throw "TOKEN EXPIRED";
+    return Promise.reject("TOKEN EXPIRED");
   }
 
-  return new Promise((resolve, reject) => {
-    client.get(payload.jti, (err, reply) => {
-      if (err)
-      {
-        reject(Error("TOKEN REVOKED"));
-      }
+  try
+  {
+    await client.async_get(payload.jti);
+  }
+  catch (err)
+  {
+    return Promise.reject(Error("TOKEN REVOKED"));
+  }
 
-      resolve(payload);
-    });
-  });
+  return payload;
 }
 
 module.exports.verify = verify;
@@ -61,9 +86,14 @@ async function create (user_id)
   var current_datetime = Date.now();
   var expiration_datetime = new Date(current_datetime + time_to_live).getTime();
 
-  client.set(token_id, 1, 'PX', time_to_live, (err, reply) => {
-    console.log(err, reply);
-  });
+  try
+  {
+    await client.async_set(token_id, 1, 'PX', time_to_live);
+  }
+  catch (err)
+  {
+    return Promise.reject(err);
+  }
 
   var payload = {
     sub: user_id,
@@ -72,7 +102,6 @@ async function create (user_id)
     jti: token_id
   };
 
-  if (!private_key) throw "NO_PRIVATE_KEY_PROVIDED";
   return {encoded: jwt.sign(payload, private_key, jwt_options), payload: payload};
 }
 
@@ -82,8 +111,17 @@ module.exports.create = create;
 
 async function revoke (token)
 {
-  var payload = await verify(token);
-  client.del(payload.jti, (err, reply) => {});
+  try
+  {
+    var payload = await verify(token);
+    await client.async_del(payload.jti);
+  }
+  catch (err)
+  {
+    return Promise.reject(err);
+  }
+
+  return true;
 }
 
 module.exports.revoke = revoke;
