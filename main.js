@@ -119,7 +119,7 @@ app.use('/', static_content);
 //-------------------------------------------------------------------------------
 
 // For login and signup logic
-const auth = require('./build/server/js/view/auth.js');
+const auth = require('./build/server/js/controller/auth.js');
 app.use('/auth', auth);
 
 
