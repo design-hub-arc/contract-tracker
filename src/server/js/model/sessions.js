@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 const uuid = require('uuidv4');
-const async_jwt = require('../utils/jsonwebtoken_promisified.js');
 const redis = require("redis");
+
+const async_jwt = require('../utils/jsonwebtoken_promisified.js');
+const knex = require("./postgresql.js");
 
 const redis_host = process.env.REDIS_HOST;
 const redis_port = process.env.REDIS_PORT;
